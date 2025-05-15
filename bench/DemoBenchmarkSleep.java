@@ -25,4 +25,8 @@ public class DemoBenchmarkSleep implements IBenchmark {
 
     public void cancel() {
     }
+
+    public void warmUp() {
+        this.run();
+    }
 }

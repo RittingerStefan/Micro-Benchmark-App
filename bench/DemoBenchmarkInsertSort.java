@@ -70,4 +70,8 @@ public class DemoBenchmarkInsertSort implements IBenchmark{
     public void cancel() {
         this.cancel = true;
     }
+
+    public void warmUp() {
+        this.run();
+    }
 }

@@ -29,4 +29,12 @@ public interface IBenchmark {
      * If no process is running, no action is performed.
      */
     void cancel();
+
+    /**
+     * Called right before running the algorithm itself to "warm-up" the task at hand. <br>
+     * The warm up should do the exact task as the run method, however it should not be timed. <br>
+     * The amount of warm-up data/time should be between 10-100% of the total time. <br>
+     * This call should <b>not</b> be benchmarked.
+     */
+    void warmUp();
 }
