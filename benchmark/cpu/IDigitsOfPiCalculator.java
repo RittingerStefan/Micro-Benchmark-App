@@ -1,5 +1,6 @@
 package benchmark.cpu;
+import java.math.BigDecimal;
 
 public interface IDigitsOfPiCalculator {
-    void calculatePi(int nrDigits);
+    BigDecimal calculatePi(int nrOfIterations);
 }
