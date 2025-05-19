@@ -134,7 +134,7 @@ public class MemoryMapper {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
-				coreFile.delete();
+				coreFile.deleteOnExit();
 			}
 		}
 	}
