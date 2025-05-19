@@ -15,7 +15,7 @@ public class TestVirtualMemory {
 
         bench.run(fileSize, bufferSize);
         log.write(bench.getResult());
-s
+
         bench.clean();
         log.close();
     }
