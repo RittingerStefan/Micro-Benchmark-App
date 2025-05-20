@@ -68,11 +68,17 @@ public class FileReader {
                 + String.format("%.2f", benchScore) + " MB/sec");
 
         if (clean) {
-            for (int i = minIndex; i <= maxIndex; i++) {
-                File f = new File(filePrefix + i + fileSuffix);
-                f.delete();
+            File dir = new File("D:/student/bench");
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (!file.delete()) {
+                        System.err.println("Failed to delete: " + file.getAbsolutePath());
+                    }
+                }
             }
         }
+
     }
 
     private void readFile(String fileName, int bufferSize) throws IOException {

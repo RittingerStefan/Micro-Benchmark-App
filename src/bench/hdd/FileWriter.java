@@ -75,7 +75,7 @@ public class FileWriter {
 
         printStats(fileName, fileSize, bufferSize);
 
-        if (clean) file.deleteOnExit();
+//        if (clean) file.deleteOnExit();
     }
 
     private void printStats(String fileName, long totalBytes, int bufferSize) {
