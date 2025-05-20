@@ -37,4 +37,10 @@ public interface IBenchmark {
      * This call should <b>not</b> be benchmarked.
      */
     void warmUp();
+
+    /**
+     *
+     * @return The result of running the benchmark
+     */
+    String getResult();
 }
