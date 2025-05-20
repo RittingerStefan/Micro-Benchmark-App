@@ -12,7 +12,11 @@ public class HDDReadSpeed implements IBenchmark {
     public void warmUp() {
     }
 
+<<<<<<< HEAD
     //    @Override
+=======
+//    @Override
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337
     public void run() {
         throw new UnsupportedOperationException("Use run(Object...) instead");
     }
@@ -50,4 +54,8 @@ public class HDDReadSpeed implements IBenchmark {
     public String getResult() {
         return null;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337

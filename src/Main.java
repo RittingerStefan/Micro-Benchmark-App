@@ -16,9 +16,16 @@ public class Main {
 
         System.out.println("\n=== READ TEST: fixed file size, variable buffer ===");
         IBenchmark read = new HDDReadSpeed();
+
         read.run("fs", false); //i put here manually because if i put true, it deletes the files before completing the full benchmark run
+
+        read.run("fs", false);
+
 
         System.out.println("\n=== READ TEST: fixed buffer, variable file size ===");
         read.run("fb", clean);
     }
+
 }
+
+

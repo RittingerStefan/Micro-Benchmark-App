@@ -75,7 +75,11 @@ public class FileWriter {
 
         printStats(fileName, fileSize, bufferSize);
 
+<<<<<<< HEAD
 //        if (clean) file.deleteOnExit();
+=======
+        if (clean) file.deleteOnExit();
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337
     }
 
     private void printStats(String fileName, long totalBytes, int bufferSize) {
@@ -93,4 +97,8 @@ public class FileWriter {
 
         benchScore += rate;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337

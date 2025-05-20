@@ -15,7 +15,11 @@ public class HDDWriteSpeed implements IBenchmark {
         // Optional: perform dummy writes if needed
     }
 
+<<<<<<< HEAD
     //    @Override
+=======
+//    @Override
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337
     public void run() {
         throw new UnsupportedOperationException("Method not implemented. Use run(Object) instead");
     }
@@ -57,4 +61,8 @@ public class HDDWriteSpeed implements IBenchmark {
     public String getResult() {
         return null; // results are printed directly
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337

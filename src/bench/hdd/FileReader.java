@@ -68,6 +68,7 @@ public class FileReader {
                 + String.format("%.2f", benchScore) + " MB/sec");
 
         if (clean) {
+<<<<<<< HEAD
             File dir = new File("D:/student/bench");
             File[] files = dir.listFiles();
             if (files != null) {
@@ -79,6 +80,13 @@ public class FileReader {
             }
         }
 
+=======
+            for (int i = minIndex; i <= maxIndex; i++) {
+                File f = new File(filePrefix + i + fileSuffix);
+                f.delete();
+            }
+        }
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337
     }
 
     private void readFile(String fileName, int bufferSize) throws IOException {
@@ -112,4 +120,8 @@ public class FileReader {
 
         benchScore += rate;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337
