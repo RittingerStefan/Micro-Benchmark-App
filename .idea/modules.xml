@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectModuleManager">
@@ -5,4 +7,18 @@
       <module fileurl="file://$PROJECT_DIR$/BenchmarkProject.iml" filepath="$PROJECT_DIR$/BenchmarkProject.iml" />
     </modules>
   </component>
+=======
+=======
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Project_DC_Benchmark.iml" filepath="$PROJECT_DIR$/Project_DC_Benchmark.iml" />
+    </modules>
+  </component>
+<<<<<<< HEAD
+>>>>>>> 3bf6119 (Initial commit)
+=======
+>>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337
 </project>
