@@ -5,7 +5,7 @@ import bench.IBenchmark;
 public class Main {
     public static void main(String[] args) {
         // Set to true if you want files deleted after each benchmark
-        boolean clean = false;
+        boolean clean = true;
 
         System.out.println("=== WRITE TEST: fixed file size, variable buffer ===");
         IBenchmark write = new HDDWriteSpeed();
@@ -16,7 +16,7 @@ public class Main {
 
         System.out.println("\n=== READ TEST: fixed file size, variable buffer ===");
         IBenchmark read = new HDDReadSpeed();
-        read.run("fs", clean);
+        read.run("fs", false);
 
         System.out.println("\n=== READ TEST: fixed buffer, variable file size ===");
         read.run("fb", clean);
