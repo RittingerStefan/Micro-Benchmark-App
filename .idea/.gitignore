@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Default ignored files
 /shelf/
 /workspace.xml
@@ -8,13 +6,3 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-=======
-# Default ignored files
-/shelf/
-/workspace.xml
->>>>>>> 3bf6119 (Initial commit)
-=======
-# Default ignored files
-/shelf/
-/workspace.xml
->>>>>>> dc6cf2d8ce9743c7492a9b765e431e7bbf528337
