@@ -1,32 +1,36 @@
 package logging;
 
-public class ConsoleLogger implements ILogger{
 
-    public void write(long param) {
-        System.out.println(param);
-    }
+public class ConsoleLogger implements ILogger {
 
-    public void write(String param) {
-        System.out.println(param);
-    }
+	@Override
+	public void write(String string) {
+		System.out.println(string);
+	}
 
-    public void write(Object...param) {
-        for(Object o:param)
-            System.out.print(o);
-        System.out.println();
-    }
+	@Override
+	public void write(long value) {
+		System.out.println(String.valueOf(value));
+	}
 
-    public void writeTime(long time, TimeUnit timeUnit) {
-        System.out.println(TimeUnit.convertUnit(time, TimeUnit.NANO, timeUnit));
-    }
+	@Override
+	public void write(Object... values) {
+		for (Object o : values)
+			System.out.print(o.toString() + " ");
+		System.out.println();
+	}
 
-    public void writeTime(String string, long time, TimeUnit timeUnit) {
-        System.out.print(string);
-        System.out.println(TimeUnit.convertUnit(time, TimeUnit.NANO, timeUnit));
-    }
-    
-    public void close() {
+	@Override
+	public void writeTime(long value, TimeUnit unit) {
+		System.out.println(String.valueOf(TimeUnit.toTimeUnit(value, unit)));
+	}
 
-    }
+	@Override
+	public void writeTime(String string, long value, TimeUnit unit) {
+		System.out.println(string + " " + TimeUnit.toTimeUnit(value, unit));
+	}
 
+	@Override
+	public void close() {
+	}
 }
