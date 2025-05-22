@@ -21,4 +21,12 @@ public enum TimeUnit {
 
         return time / Math.pow(10, power);
     }
+
+    public String toString() {
+        if(this == NANO) { return "ns";}
+        else if(this == MICRO) { return "us";}
+        else if(this == MILLI) { return "ms";}
+        else if(this == SEC) { return "s";}
+        return "";
+    }
 }

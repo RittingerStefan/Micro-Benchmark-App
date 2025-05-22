@@ -17,12 +17,12 @@ public class ConsoleLogger implements ILogger{
     }
 
     public void writeTime(long time, TimeUnit timeUnit) {
-        System.out.println(TimeUnit.convertUnit(time, TimeUnit.NANO, timeUnit));
+        System.out.println(TimeUnit.convertUnit(time, TimeUnit.NANO, timeUnit) + " " + timeUnit);
     }
 
     public void writeTime(String string, long time, TimeUnit timeUnit) {
         System.out.print(string);
-        System.out.println(TimeUnit.convertUnit(time, TimeUnit.NANO, timeUnit));
+        System.out.println(TimeUnit.convertUnit(time, TimeUnit.NANO, timeUnit) + " " + timeUnit);
     }
     
     public void close() {
