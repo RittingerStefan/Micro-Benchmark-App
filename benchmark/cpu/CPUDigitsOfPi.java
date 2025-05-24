@@ -2,15 +2,19 @@ package benchmark.cpu;
 
 import bench.IBenchmark;
 
+import java.math.BigDecimal;
+
 public class CPUDigitsOfPi implements IBenchmark {
     private IDigitsOfPiCalculator calculator;
-    private int nrDigits;
-    private boolean cancel;
+    private BigDecimal piResult;
+
+    public BigDecimal getPreviousPiResult() {
+        return piResult;
+    }
 
     @Override
     public void run() {
-        cancel = false;
-        //TODO
+        piResult = calculator.calculatePi();
     }
 
     @Override
@@ -21,17 +25,41 @@ public class CPUDigitsOfPi implements IBenchmark {
 
     @Override
     public void initialize(Object... params) {
-        //TODO
-        int piAlgorithm = (Integer) params[0];
-        nrDigits = (Integer) params[1];
+        // validate parameters
+        if (params.length != 2) {
+            throw new IllegalArgumentException("Exactly 2 parameters are expected, got " + params.length);
+        }
+        if (!(params[0] instanceof Number)) {
+            throw new IllegalArgumentException("The 1st parameter must be a number");
+        }
+        if (!(params[1] instanceof Number)) {
+            throw new IllegalArgumentException("The 2nd parameter must be a number");
+        }
+
+        int piAlgorithm = ((Number) params[0]).intValue();
+        int nrOfPiDigits = ((Number) params[1]).intValue();
+        if (nrOfPiDigits < 10) {
+            throw new IllegalArgumentException("The nr of PI digits parameter must be >= 10");
+        }
 
         switch (piAlgorithm) {
             case 0:
-                //TODO
+                // Chudnovsky algorithm
+                calculator = new ChudnovskyPiCalculator();
+                break;
+            case 1:
+                // Gauss-Legendre algorithm
+                calculator = new GaussLegendrePiCalculator();
+                break;
+            case 2:
+                // Bailey-Borwein-Plouffe algorithm
+                calculator = new BaileyBorweinPlouffePiCalculator();
                 break;
             default:
                 throw new IllegalArgumentException("Invalid algorithm: " + piAlgorithm);
         }
+
+        calculator.configurePiCalculation(nrOfPiDigits);
     }
 
     @Override
@@ -41,11 +69,17 @@ public class CPUDigitsOfPi implements IBenchmark {
 
     @Override
     public void cancel() {
-        cancel = true;
+        if (calculator == null) {
+            throw new IllegalArgumentException("No PI calculator was configured!");
+        }
+        calculator.cancel();
     }
 
     @Override
     public void warmUp() {
-        //TODO
+        if (calculator == null) {
+            throw new IllegalArgumentException("No PI calculator was configured!");
+        }
+        calculator.warmUp();
     }
 }

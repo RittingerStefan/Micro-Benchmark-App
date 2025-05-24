@@ -2,6 +2,7 @@ package benchmark.cpu;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class ChudnovskyPiCalculator implements IDigitsOfPiCalculator {
     private static final BigDecimal bd10005 = new BigDecimal(10_005);
@@ -9,14 +10,39 @@ public class ChudnovskyPiCalculator implements IDigitsOfPiCalculator {
     private static final BigDecimal bd13591409 = new BigDecimal(13_591_409);
     private static final BigDecimal bd10939058860032000 = new BigDecimal(10_939_058_860_032_000L);
     private static final BigDecimal bd545140134 = new BigDecimal(545_140_134);
-    private static final BigDecimal sqrt10005 = bd10005.sqrt(new MathContext(10_000));
+
+    private MathContext mathContext = new MathContext(10, RoundingMode.HALF_UP);
+    private int nrOfIterations = 2;
+    private BigDecimal sqrt10005 = new BigDecimal(100);
+    private boolean isCanceled = false;
 
     @Override
-    public BigDecimal calculatePi(int nrOfIterations) {
-        MathContext mathContext = new MathContext(nrOfIterations * 1000);
+    public void warmUp() {
+        internalCalculatePi(50);
+    }
+
+    @Override
+    public void configurePiCalculation(int nrOfPiDigits) {
+        nrOfIterations = Math.max(2, (int)Math.ceil(nrOfPiDigits / 14.18));
+        mathContext = new MathContext(nrOfPiDigits + 1, RoundingMode.HALF_UP);
+        sqrt10005 = bd10005.sqrt(mathContext);
+    }
+
+    @Override
+    public BigDecimal calculatePi() {
+        return internalCalculatePi(nrOfIterations);
+    }
+
+    @Override
+    public void cancel() {
+        isCanceled = true;
+    }
+
+    private BigDecimal internalCalculatePi(int nrIterations) {
+        isCanceled = false;
 
         // _, Q1n, R1n = binary_split(1, n)
-        BinarySplitResult piBinarySplit = binarySplit(1, nrOfIterations);
+        BinarySplitResult piBinarySplit = binarySplit(1, nrIterations);
 
         // return (426880 * Decimal(10005).sqrt() * Q1n) / (13591409*Q1n + R1n)
         BigDecimal dividend = bd426880.multiply(sqrt10005).multiply(piBinarySplit.getQ());
@@ -25,6 +51,10 @@ public class ChudnovskyPiCalculator implements IDigitsOfPiCalculator {
     }
 
     private BinarySplitResult binarySplit(long a, long b) {
+        if (isCanceled) {
+            return null;
+        }
+
         BigDecimal pab, qab, rab;
         if(b == (a+1)) {
             long n1 = - (6 * a - 1);
@@ -44,6 +74,10 @@ public class ChudnovskyPiCalculator implements IDigitsOfPiCalculator {
             BinarySplitResult amBinarySplit = binarySplit(a, m);
             // Pmb, Qmb, Rmb = binary_split(m, b)
             BinarySplitResult mbBinarySplit = binarySplit(m, b);
+
+            if (isCanceled || amBinarySplit == null || mbBinarySplit == null) {
+                return null;
+            }
 
             // Pab = Pam * Pmb
             pab = amBinarySplit.getP().multiply(mbBinarySplit.getP());
