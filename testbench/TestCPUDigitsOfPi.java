@@ -1,44 +1,48 @@
 package testbench;
 
+import bench.IBenchmark;
 import benchmark.cpu.*;
-
-import java.math.BigDecimal;
+import logging.*;
+import timing.*;
 
 public class TestCPUDigitsOfPi {
+    private static final String[] algorithmNames = new String[] {
+        "Chudnovsky", "Gauss-Legendre", "Bailey-Borwein-Plouffe"
+    };
+
+    private static final int[] nrOfPiDigits = new int[] {
+        50, 100, 1000, 10_000, 100_000
+    };
+
     public static void main(String[] args) {
-        // TODO
+        ILogger log = new ConsoleLogger();
+        IBenchmark bench = new CPUDigitsOfPi();
 
-        System.out.println("\nTesting ChudnovskyPiCalculator...");
-        testPiAlgo(new ChudnovskyPiCalculator());
+        for (int algorithm = 0; algorithm < algorithmNames.length; algorithm++) {
+            for (int nrDigits : nrOfPiDigits) {
+                // Bailey-Borwein-Plouffe is very slow for large numbers of digits!
+                if (algorithm == 2 && nrDigits > 10_000) {
+                    continue;
+                }
 
-        System.out.println("\nTesting GaussLegendrePiCalculator...");
-        testPiAlgo(new GaussLegendrePiCalculator());
+                log.write("Computing PI (algorithm: " + algorithmNames[algorithm] +
+                        ", nr.digits: " + nrDigits + ") ... ");
 
-        System.out.println("\nTesting BaileyBorweinPlouffePiCalculator...");
-        testPiAlgo(new BaileyBorweinPlouffePiCalculator());
-    }
+                // Initialization and warm-up
+                bench.initialize(algorithm, nrDigits);
+                bench.warmUp();
 
-    private static void testPiAlgo(IDigitsOfPiCalculator piCalc) {
-        testPi(piCalc, 20);
-        testPi(piCalc, 100);
-        testPi(piCalc, 1_000);
-        testPi(piCalc, 10_000);
-        testPi(piCalc, 100_000);
-    }
+                // actual run
+                ITimer timer = new Timer();
+                timer.start();
+                bench.run();
+                long timeNanos = timer.stop();
+                double millis = timeNanos / 1_000_000.0;
+                log.write(algorithmNames[algorithm] + "(nr.digits: " + nrDigits + ") = " + millis + " ms");
+            }
+        }
 
-    private static void testPi(IDigitsOfPiCalculator piCalc, int nrOfPiDigits) {
-        piCalc.configurePiCalculation(nrOfPiDigits);
-
-        long start = System.nanoTime();
-        BigDecimal pi = piCalc.calculatePi();
-        long end = System.nanoTime();
-        double durationSec = (double)(end - start) / 1_000_000_000.0;
-
-        String piStr = pi.toString();
-        int digits = piStr.length() - 2;
-        // piStr = piStr.substring(0, 16) + "[...]";
-        piStr = piStr.length() > 16 ? piStr.substring(0, 16) + "[...]" : piStr;
-        System.out.println("Pi (" + nrOfPiDigits + " digits): " + piStr + " (" + digits + " digits)");
-        System.out.println("Duration: " + durationSec + " seconds");
+        log.close();
+        bench.clean();
     }
 }
