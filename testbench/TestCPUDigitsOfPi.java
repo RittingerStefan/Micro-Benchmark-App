@@ -6,6 +6,8 @@ import logging.*;
 import timing.*;
 
 public class TestCPUDigitsOfPi {
+    private static final int NrBenchLoops = 5;
+
     private static final String[] algorithmNames = new String[] {
         "Chudnovsky", "Gauss-Legendre", "Bailey-Borwein-Plouffe"
     };
@@ -25,20 +27,29 @@ public class TestCPUDigitsOfPi {
                     continue;
                 }
 
-                log.write("Computing PI (algorithm: " + algorithmNames[algorithm] +
-                        ", nr.digits: " + nrDigits + ") ... ");
-
                 // Initialization and warm-up
                 bench.initialize(algorithm, nrDigits);
                 bench.warmUp();
+                double sumMillis = 0.0;
 
-                // actual run
-                ITimer timer = new Timer();
-                timer.start();
-                bench.run();
-                long timeNanos = timer.stop();
-                double millis = timeNanos / 1_000_000.0;
-                log.write(algorithmNames[algorithm] + "(nr.digits: " + nrDigits + ") = " + millis + " ms");
+                for (int i = 1; i <= NrBenchLoops; i++) {
+                    log.write("Computing PI (algorithm: " + algorithmNames[algorithm] +
+                            ", nr.digits: " + nrDigits + ") - loop " + i + "/" + NrBenchLoops);
+
+                    // actual run
+                    ITimer timer = new Timer();
+                    timer.start();
+                    bench.run();
+                    long timeNanos = timer.stop();
+                    double millis = timeNanos / 1_000_000.0;
+                    sumMillis += millis;
+                    log.write(algorithmNames[algorithm] + "(nr.digits: " + nrDigits + ") = " + millis + " ms");
+                }
+
+                // compute the average duration
+                double avgMillis = sumMillis / NrBenchLoops;
+                log.write("Average duration (" + algorithmNames[algorithm] + ", nr.digits: " + nrDigits +
+                        ", " + NrBenchLoops + " loops) = " + avgMillis + " ms");
             }
         }
 
