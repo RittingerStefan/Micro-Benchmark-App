@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"logging","l":"ConsoleLogger"},{"p":"bench","l":"DemoBenchmarkInsertSort"},{"p":"bench","l":"DemoBenchmarkSleep"},{"p":"bench","l":"IBenchmark"},{"p":"logging","l":"ILogger"},{"p":"timing","l":"ITimer"},{"p":"timing","l":"Timer"},{"p":"logging","l":"TimeUnit"}];updateSearchResults();
