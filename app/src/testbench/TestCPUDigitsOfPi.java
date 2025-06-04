@@ -5,6 +5,8 @@ import bench.cpu.*;
 import logging.*;
 import timing.*;
 
+
+
 public class TestCPUDigitsOfPi {
     private static final int NrBenchLoops = 5;
 
@@ -57,3 +59,4 @@ public class TestCPUDigitsOfPi {
         bench.clean();
     }
 }
+
